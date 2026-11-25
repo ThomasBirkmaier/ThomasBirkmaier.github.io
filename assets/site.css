@@ -300,7 +300,22 @@ section{margin-top:var(--gap)}
 .more div{border-top:1px solid var(--line-strong);padding:18px 0 22px}
 .more dt{font-weight:600}
 .more dt a{display:inline-flex;align-items:center;gap:10px}
-.more .ico{width:20px;height:20px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+/* Where to look while the stage plays: the part that just changed is lifted and ringed, the rest steps back. */
+@media (prefers-reduced-motion:no-preference){
+  .node{transition:opacity 600ms var(--ease),transform 600ms var(--ease),box-shadow 600ms var(--ease),border-color 600ms var(--ease)}
+  .stage.focusing .node.on:not(.focus){opacity:.42}
+  .stage.focusing .link.on:not(.focus){opacity:.4}
+  .stage.focusing .node.focus{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft),0 18px 40px -18px rgba(11,107,97,.45)}
+  .stage.focusing .link.focus i{border-top-color:var(--accent);border-left-color:var(--accent)}
+  .stage.focusing .link.focus .cap{color:var(--accent-ink);font-weight:500}
+  .stage .crit li,.stage .tests li{transition:background-color 500ms var(--ease);border-radius:6px}
+  .stage.focusing .crit li.focus,.stage.focusing .tests li.focus,.stage.focusing .crit.focus li{background:var(--accent-soft);box-shadow:0 0 0 4px var(--accent-soft)}
+  .stage.focusing .link.focus b{animation:pulse 900ms var(--ease) infinite}
+}
+.ico{width:20px;height:20px;flex:none;fill:none;stroke:var(--accent);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.pillar h3,.way b{display:flex;align-items:center;gap:10px}
+.pillar .ico{width:24px;height:24px}
+.ico.big{display:block;width:28px;height:28px;margin-bottom:14px;stroke-width:1.4}
 .more dt a{text-decoration:none}
 .more dt a:hover{text-decoration:underline;text-decoration-color:var(--underline);text-underline-offset:3px;text-decoration-thickness:1.5px}
 .more dd{margin-top:6px;color:var(--dim);font-size:1rem;line-height:1.55}
@@ -392,18 +407,25 @@ footer .note{margin-top:22px}
 /* Gentle motion: content rises into place as it enters, the hero settles in once, the chain keeps a quiet flow,
    the icons draw themselves and the pages of the web UI cross-fade. All of it is off with reduced motion. */
 @media (prefers-reduced-motion:no-preference){
-  .js .rise{opacity:0;transform:translateY(18px);transition:opacity 760ms var(--ease),transform 900ms var(--ease);transition-delay:calc(var(--i,0) * 90ms)}
+  .js .rise{opacity:0;transform:translateY(42px) scale(.985);transition:opacity 900ms var(--ease),transform 1100ms cubic-bezier(.16,1,.3,1);transition-delay:calc(var(--i,0) * 120ms)}
   .js .rise.in{opacity:1;transform:none}
-  .js .hero h1 .w{display:inline-block;opacity:0;transform:translateY(.35em);animation:word 900ms var(--ease) forwards;animation-delay:calc(120ms + var(--i) * 55ms)}
+  .js .hero h1 .w{display:inline-block;opacity:0;transform:translateY(.6em) rotate(2deg);transform-origin:left bottom;animation:word 1000ms cubic-bezier(.16,1,.3,1) forwards;animation-delay:calc(120ms + var(--i) * 65ms)}
   @keyframes word{to{opacity:1;transform:none}}
   .js .hero .lead,.js .hero .actions{opacity:0;animation:word 900ms var(--ease) forwards;transform:translateY(10px)}
   .js .hero .lead{animation-delay:620ms}
   .js .hero .actions{animation-delay:760ms}
-  .js .more .ico *{stroke-dasharray:60;stroke-dashoffset:60;transition:stroke-dashoffset 1200ms var(--ease);transition-delay:calc(200ms + var(--i,0) * 90ms)}
-  .js .more .rise.in .ico *{stroke-dashoffset:0}
+  .js .rise .ico *,.js .rise.ico *{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1200ms var(--ease);transition-delay:calc(200ms + var(--i,0) * 90ms)}
+  .js .rise.in .ico *{stroke-dashoffset:0}
   .js .panel:not([hidden]) .frame{animation:panel 520ms var(--ease)}
-  @keyframes panel{from{opacity:0;transform:translateY(6px) scale(.995)}to{opacity:1;transform:none}}
+  @keyframes panel{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
   .js .frame img{transition:transform 1400ms var(--ease)}
   .js .panel .frame:hover img{transform:scale(1.012)}
+  .js .frame.rise{transform:translateY(60px) scale(.94)}
+  .js .frame.rise.in{transform:none}
+  .js .ways>.rise:nth-child(even){transform:translateY(64px)}
+  .js .ways>.rise.in{transform:none}
+  .more>div,.way,.nevers li,.pillar{transition:transform 500ms var(--ease)}
+  .more>div.in:hover,.way.in:hover,.nevers li.in:hover,.pillar.in:hover{transform:translateY(-4px)}
+  .more>div:hover .ico,.way:hover .ico,.pillar:hover .ico,.nevers li:hover .ico{transform:scale(1.12);transition:transform 400ms var(--ease)}
   .link.flow b{animation:pulse 1100ms cubic-bezier(.45,0,.55,1)}
 }
