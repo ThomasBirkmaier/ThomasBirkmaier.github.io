@@ -16,8 +16,13 @@
   // The stage: fifteen small steps in seven chapters. Each step is a complete state, so any chapter can be shown directly.
   (function(){
     var stage=document.getElementById("stage"),parts=stage.querySelectorAll("[data-from]"),segs=stage.querySelectorAll(".seg i");
-    // 30 % slower than the first cut, so each change can be followed.
-    var slow=1.3,at=[0,250,1900,2300,4500,5200,6900,7600,8200,8800,10900,11700,13400,14200,16100,16900].map(function(v){return Math.round(v*slow)}),end=Math.round(19000*slow);
+    // Wide screens show all four cards, so the steps can follow each other closely (half again as slow as the first cut).
+    // Narrow screens show one card at a time: each card stays long enough to see what changes on it, and the
+    // story never switches back and forth between two cards.
+    var narrow=!still&&window.matchMedia("(max-width:1020px)").matches;
+    var at=narrow?[0,250,3000,3700,8200,9800,12600,14200,15800,17400,21200,23200,26800,31000,34200,36200]
+      :[0,250,1900,2300,4500,5200,6900,7600,8200,8800,10900,11700,13400,14200,16100,16900].map(function(v){return Math.round(v*1.5)});
+    var end=narrow?40200:Math.round(19000*1.5);
     var chapterOf=[0,1,2,2,3,3,4,4,4,4,5,5,6,6,7,7],chapterStart=[at[1],at[2],at[4],at[6],at[10],at[12],at[14],end],chapterEnd=[1,3,5,9,11,13,15];
     var pulses={2:[".l-1"],5:[".l-2"],6:[".l-3"],8:[".l-3"],14:[".l-3"]},pings={10:".n-need",11:".n-sr amber",12:".n-sr",13:".n-ev amber",15:".n-ev"};
     function show(s){
@@ -39,13 +44,13 @@
     }
     // On a narrow screen the stage shows a small chain of four chips, always in view, and one card below it:
     // the part that changes now. A chip opens its card and holds the story there; Replay starts it again.
-    var viewOf={1:1,2:1,3:2,4:3,5:2,6:3,7:2,8:3,9:4,10:1,11:1,12:2,13:4,14:3,15:4},chipS=stage.querySelectorAll(".chip-s"),chips=stage.querySelectorAll(".chip");
+    var viewOf={1:1,2:1,3:2,4:3,5:3,6:4,7:4,8:4,9:4,10:1,11:1,12:2,13:4,14:4,15:4},chipS=stage.querySelectorAll(".chip-s"),chips=stage.querySelectorAll(".chip");
     function view(v){stage.dataset.view=v;each(chips,function(c){var on=+c.dataset.view===v;c.classList.toggle("now",on);c.setAttribute("aria-pressed",on?"true":"false")})}
     function mini(s,old){
       if(!chipS.length)return;
       var t=[
         s<1?"":s>=10&&s<15?"changed":"plain words",
-        s<3?"":s===11||s===12?"to review":s>=12&&s<15?"changed":"2 criteria",
+        s<3?"":s===11?"to review":s>=12&&s<15?"changed":"2 criteria",
         s<4?"":old?"older version":(s>=8?2:s>=6?1:0)+" of 2 passed",
         s<6?"":old?"outdated":s>=9?"verified":"open"];
       each(chipS,function(e,k){e.textContent=t[k]});
@@ -123,7 +128,7 @@
       cues.push(cue);
     });
     var total=t+1400;
-    function reset(){root.dataset.phase=0;cues.forEach(function(c){c.el.classList.remove("on");c.n=0;if(c.chars)c.chars.forEach(function(s){s.className="ch"})})}
+    function reset(){root.dataset.phase=0;cues.forEach(function(c){c.el.classList.remove("on");c.n=0;c.caret=null;if(c.chars)c.chars.forEach(function(s){s.className="ch"})})}
     function finish(){root.dataset.phase=0;cues.forEach(function(c){c.el.classList.add("on");if(c.chars)c.chars.forEach(function(s){s.className="ch on"})})}
     var run=clock(function(now){
       cues.forEach(function(c){
@@ -132,8 +137,10 @@
         if(c.chars&&c.n<c.chars.length){
           var want=Math.min(c.chars.length,Math.floor((now-c.at)/speed)+1);
           for(;c.n<want;c.n++){c.chars[c.n].className="ch on"}
-          if(c.n>1)c.chars[c.n-2].className="ch on";
-          c.chars[c.n-1].className=c.n<c.chars.length?"ch on cur":"ch on";
+          // One caret only: a slow frame types several letters at once, so the old caret is cleared by reference.
+          if(c.caret)c.caret.className="ch on";
+          c.caret=c.n<c.chars.length?c.chars[c.n-1]:null;
+          if(c.caret)c.caret.className="ch on cur";
         }
       });
       if(now>=total){root.dataset.phase=0;return false}
