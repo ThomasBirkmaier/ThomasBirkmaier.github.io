@@ -68,7 +68,10 @@ p code,li code,dd code{background:var(--sunk);border:1px solid var(--line);borde
 .brand svg{flex:none}
 .logo-bg{fill:var(--logo-bg)} .logo-fg{stroke:var(--logo-fg)}
 .nav{display:flex;align-items:center;gap:clamp(14px,2.4vw,30px);font-size:.9375rem}
-.nav a{color:var(--dim);text-decoration:none}
+.nav a{color:var(--dim);text-decoration:none;display:inline-flex;align-items:center;gap:7px}
+.nav .ico{width:18px;height:18px;transition:transform 300ms var(--ease)}
+.nav .ico.gh{width:17px;height:17px;fill:var(--accent);stroke:none}
+.nav a:hover .ico{transform:translateY(-1px)}
 .nav a:hover{color:var(--ink)}
 
 /* Buttons: the button of the web UI, one size up. */
