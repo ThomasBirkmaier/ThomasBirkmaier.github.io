@@ -4,16 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="color-scheme" content="light dark">
-<title>ReqSeq: requirements, traced from the need to the test that shows them</title>
-<meta name="description" content="ReqSeq is requirements engineering for agents and people. It traces a need through system requirements, acceptance criteria and tests to the evidence record of each test run, as Markdown files in your Git repository.">
+<title>ReqSeq: requirements your agent writes, traced to the tests that verify them</title>
+<meta name="description" content="Your agent breaks a need down into requirements, acceptance criteria and tests. ReqSeq traces them to each test run, as Markdown files in your Git repository.">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#eef0f1">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1a1d21">
 <link rel="canonical" href="https://thomasbirkmaier.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://thomasbirkmaier.github.io/">
-<meta property="og:title" content="ReqSeq: requirements, traced from the need to the test that shows them">
-<meta property="og:description" content="Tell your agent what you need. It breaks the need down into system requirements, acceptance criteria and tests, and ReqSeq traces them through to the evidence record of each test run.">
+<meta property="og:site_name" content="ReqSeq">
+<meta property="og:title" content="ReqSeq: requirements your agent writes, traced to the tests that verify them">
+<meta property="og:description" content="Tell your agent what you need. See which tests verify it, and what is outdated since a requirement changed.">
 <meta property="og:image" content="https://thomasbirkmaier.github.io/assets/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ReqSeq: a need, its requirement, the tests and the status verified, in one chain.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/ibm-plex-sans-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/ibm-plex-sans-500.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="assets/site.css">
 </head>
 <body class="no-js">
@@ -25,7 +33,7 @@
     <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect class="logo-bg" width="32" height="32" rx="8"/><path class="logo-fg" d="M10 9h7a5 5 0 0 1 0 10h-7zM10 19v4M17 19l5 4" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
     ReqSeq
   </a>
-  <nav class="nav" aria-label="ReqSeq">
+  <nav class="nav" aria-label="Main">
     <a class="keep" href="https://thomasbirkmaier.github.io/ReqSeq/"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path pathLength="1" d="M10 5.5C8.5 4 6 3.5 3 3.5v12c3 0 5.5.5 7 2 1.5-1.5 4-2 7-2v-12c-3 0-5.5.5-7 2zM10 5.5v12"/></svg>Docs</a>
     <a href="https://thomasbirkmaier.github.io/ReqSeq/spec/"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path pathLength="1" d="M5 2.5h7l3.5 3.5v11.5H5z"/><path pathLength="1" d="M7.5 9.5l1.2 1.2 2.3-2.4M7.5 14h5"/></svg>Specification</a>
     <a class="keep" href="https://github.com/ThomasBirkmaier/ReqSeq"><svg class="ico gh" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>GitHub</a>
@@ -35,24 +43,25 @@
 <main id="main">
 
 <div class="wrap hero">
-  <h1 aria-label="What you asked your agent for, traced to the test that shows it."><span class="w" style="--i:0" aria-hidden="true">What</span> <span class="w" style="--i:1" aria-hidden="true">you</span> <span class="w" style="--i:2" aria-hidden="true">asked</span> <span class="w" style="--i:3" aria-hidden="true">your</span> <span class="w" style="--i:4" aria-hidden="true">agent</span> <span class="w" style="--i:5" aria-hidden="true">for,</span> <span class="w" style="--i:6" aria-hidden="true">traced</span> <span class="w" style="--i:7" aria-hidden="true">to</span> <span class="w" style="--i:8" aria-hidden="true">the</span> <span class="w" style="--i:9" aria-hidden="true">test</span> <span class="w" style="--i:10" aria-hidden="true">that</span> <span class="w" style="--i:11" aria-hidden="true">shows</span> <span class="w" style="--i:12" aria-hidden="true">it.</span></h1>
-  <p class="lead">Tell your agent what you need. It breaks the need down into system requirements, acceptance criteria and tests, and ReqSeq traces them through to the evidence record of each test run. You keep the whole chain, not one specification document.</p>
+  <h1 aria-label="Tell your agent what you need. See which tests verify it."><span class="w" style="--i:0" aria-hidden="true">Tell</span> <span class="w" style="--i:1" aria-hidden="true">your</span> <span class="w" style="--i:2" aria-hidden="true">agent</span> <span class="w" style="--i:3" aria-hidden="true">what</span> <span class="w" style="--i:4" aria-hidden="true">you</span> <span class="w" style="--i:5" aria-hidden="true">need.</span> <span class="w" style="--i:6" aria-hidden="true">See</span> <span class="w" style="--i:7" aria-hidden="true">which</span> <span class="w" style="--i:8" aria-hidden="true">tests</span> <span class="w" style="--i:9" aria-hidden="true">verify</span> <span class="w" style="--i:10" aria-hidden="true">it.</span></h1>
+  <p class="lead">Your agent breaks the need down into system requirements and acceptance criteria through ReqSeq's MCP server or CLI, and names each criterion in the test that checks it. ReqSeq computes what is verified, and what is outdated once a requirement changes. You keep the whole chain, not one specification document.</p>
   <div class="actions">
     <a class="btn primary" href="https://github.com/ThomasBirkmaier/ReqSeq/releases/latest">Download ReqSeq</a>
     <a class="btn" href="https://thomasbirkmaier.github.io/ReqSeq/start/get-started/">Get started</a>
-    <p class="note">For macOS on Apple silicon, Linux x64 and Windows x64. <br>It runs on your computer and opens no network connection.</p>
+    <p class="note">One download with the command line, the MCP server and the web UI, for macOS 26 or newer on Apple silicon, Linux x64 (Ubuntu 24.04) and Windows 11 x64. <br>Connects to Claude Code, Cursor, VS Code, Codex CLI and Claude Desktop. Runs on your computer and opens no network connection.</p>
   </div>
 
   <div class="stage" id="stage" role="group" aria-label="The chain from a need to its evidence, shown in seven steps" data-ch="7" data-need="3" data-sr="3" data-rel="ok" data-keys="0" data-t1="1" data-t2="1" data-c1="ok" data-c2="ok" data-count="2" data-ver="ok" data-build="2">
     <div class="stage-head">
       <p class="say" aria-hidden="true">
+        <span data-c="0">From a need to a verified requirement, in seven steps.</span>
         <span data-c="1">You describe a need in plain words.</span>
-        <span data-c="2">Your agent derives a system requirement from it, with acceptance criteria.</span>
-        <span data-c="3">Each test names the acceptance criterion it checks, by its key.</span>
-        <span data-c="4">The test results come in as JUnit XML. ReqSeq computes the status: verified.</span>
-        <span data-c="5">Later the need changes. The relation still holds its old version, so it shows as outdated.</span>
-        <span data-c="6">You review the requirement, and it changes too. Its evidence is for the older version.</span>
-        <span data-c="7">The tests run again. The requirement is verified, for the version it has now.</span>
+        <span data-c="2">Your agent derives a system requirement with acceptance criteria.</span>
+        <span data-c="3">Each test names the criterion it checks, by its key.</span>
+        <span data-c="4">Test results arrive as JUnit XML. Status: verified.</span>
+        <span data-c="5">Later the need changes. The relation shows as outdated.</span>
+        <span data-c="6">You review the requirement, and it changes too. Its evidence is now outdated.</span>
+        <span data-c="7">The tests run again: verified, for the current version.</span>
       </p>
       <div class="ctl">
         <div class="segs" id="segs">
@@ -64,14 +73,14 @@
           <button class="seg" type="button" aria-label="Step 6: the evidence is outdated"><span><i></i></span></button>
           <button class="seg" type="button" aria-label="Step 7: verified again"><span><i></i></span></button>
         </div>
-        <button class="replay" type="button" id="stage-replay">Replay</button>
+        <button class="replay" type="button" id="stage-replay">Play</button>
       </div>
     </div>
-    <div class="mini" aria-hidden="true">
-      <button type="button" class="chip" data-view="1" tabindex="-1"><b>Need</b><span class="chip-s"></span></button><i class="mini-l m-1"></i>
-      <button type="button" class="chip" data-view="2" tabindex="-1"><b>Requirement</b><span class="chip-s"></span></button><i class="mini-l m-2"></i>
-      <button type="button" class="chip" data-view="3" tabindex="-1"><b>Tests</b><span class="chip-s"></span></button><i class="mini-l m-3"></i>
-      <button type="button" class="chip" data-view="4" tabindex="-1"><b>Status</b><span class="chip-s"></span></button>
+    <div class="mini" role="group" aria-label="Parts of the chain">
+      <button type="button" class="chip" data-view="1" aria-pressed="false"><b>Need</b><span class="chip-s"></span></button><i class="mini-l m-1"></i>
+      <button type="button" class="chip" data-view="2" aria-pressed="false"><b>Requirement</b><span class="chip-s"></span></button><i class="mini-l m-2"></i>
+      <button type="button" class="chip" data-view="3" aria-pressed="false"><b>Tests</b><span class="chip-s"></span></button><i class="mini-l m-3"></i>
+      <button type="button" class="chip" data-view="4" aria-pressed="false"><b>Status</b><span class="chip-s"></span></button>
     </div>
     <div class="chain-grid">
       <div class="lane lane-1"><b>You</b><span>say what you need, in plain words.</span></div>
@@ -140,7 +149,7 @@
   <div class="pillars">
     <div class="pillar">
       <h3><svg class="ico" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path pathLength="1" d="M3 4.5h14v9H8l-4 3v-3H3z"/><path pathLength="1" d="M6.5 8h7M6.5 10.5h4.5"/></svg>Through your agent</h3>
-      <p>You talk to your agent. It writes the needs, system requirements, acceptance criteria and tests, through ReqSeq's MCP server or CLI. Every command reports what the elements still lack, so the agent has its next step, even if you never open the web UI.</p>
+      <p>You talk to your agent. It writes the needs, system requirements and acceptance criteria through ReqSeq's MCP server or CLI, and the tests into your repository. Every command reports what the elements still lack, so the agent has its next step, even if you never open the web UI.</p>
       <p><a class="textlink" href="#h-agent">How the agent works with ReqSeq</a></p>
     </div>
     <div class="pillar">
@@ -149,14 +158,14 @@
       <p><a class="textlink" href="#h-ui">The web UI</a></p>
     </div>
   </div>
-  <p class="join">Both work on the same Markdown files in your Git repository. <b>Each way works on its own. Together, the agent writes and people decide.</b></p>
+  <p class="join">Both work on the same Markdown files in your Git repository. <b>Each works on its own. Together, the agent writes and people decide.</b></p>
 </section>
 
 <section class="wrap" aria-labelledby="h-agent">
   <div class="cols player" id="mcp" data-phase="0">
     <div class="side">
       <h2 id="h-agent">Talk to your agent. It keeps the requirements.</h2>
-      <p class="lead">ReqSeq does not run an agent itself. You talk to your own agent. It calls ReqSeq's commands, and the skill file that <code>workspace init</code> writes tells it how to work with them.</p>
+      <p class="lead">Spec-driven development with the agent you already use. It calls ReqSeq's commands, and the skill file that <code>workspace init</code> writes tells it how to work with them. ReqSeq runs no agent itself.</p>
       <ol class="sync">
         <li data-p="1"><span><b>You say what you need.</b> In your agent's chat, in plain words.</span></li>
         <li data-p="2"><span><b>The agent writes the elements.</b> A need, a system requirement with its acceptance criteria, and the relation between them, through the tools of the MCP server.</span></li>
@@ -182,7 +191,7 @@
   <div class="cols">
     <div class="head">
       <h2 id="h-tests">Your tests name the requirement. ReqSeq computes what is verified.</h2>
-      <p class="lead">A test names the requirement and the acceptance criterion it checks, in its name. Any test tool that writes JUnit XML works, without a converter or plugin.</p>
+      <p class="lead">A test names the requirement and the acceptance criterion it checks, in its name. Any test tool that writes JUnit XML works, such as Vitest, pytest, Jest, Maven or Gradle, without a converter or plugin.</p>
     </div>
   </div>
   <div class="cols wide player" id="cli" data-phase="0">
@@ -228,6 +237,13 @@
   </div>
 </section>
 
+<div class="wrap mid-cta">
+  <div class="actions">
+    <a class="btn primary" href="https://github.com/ThomasBirkmaier/ReqSeq/releases/latest">Download ReqSeq</a>
+    <a class="btn" href="https://thomasbirkmaier.github.io/ReqSeq/start/get-started/">Get started</a>
+  </div>
+</div>
+
 <section class="wrap" aria-labelledby="h-ui">
   <div class="cols">
     <div class="head">
@@ -243,16 +259,16 @@
     <button role="tab" id="t-matrix" aria-controls="p-matrix" aria-selected="false" tabindex="-1">Trace matrix</button>
   </div>
   <figure class="panel" role="tabpanel" id="p-overview" aria-labelledby="t-overview">
-    <div class="frame" style="--mw:327%;--mx:-151%;--my:-3.4%"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/demo-overview-dark.webp"><img src="assets/img/demo-overview-light.webp" width="2400" height="1500" decoding="async" alt="The overview of the example workspace Weather station: 4 of 8 system requirements are verified, 1 has outdated evidence, 1 a failed test and 2 no evidence yet. Beside it the queues Evidence outdated and Drafts to decide."></picture></div>
+    <div class="frame" style="--mw:327%;--mx:-151%;--my:-3.4%"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/demo-overview-dark.webp"><img loading="lazy" src="assets/img/demo-overview-light.webp" width="2400" height="1500" decoding="async" alt="The overview of the example workspace Weather station: 4 of 8 system requirements are verified, 1 has outdated evidence, 1 a failed test and 2 no evidence yet. Beside it the queues Evidence outdated and Drafts to decide."></picture></div>
     <figcaption>The overview counts what is verified and lists what needs a look or a decision: evidence that is outdated, drafts to decide, and the changes since the newest baseline.</figcaption>
   </figure>
   <figure class="panel" role="tabpanel" id="p-element" aria-labelledby="t-element">
     <div class="frame" style="--mw:300%;--mx:-75%;--my:-14.6%"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/demo-element-dark.webp"><img loading="lazy" src="assets/img/demo-element-light.webp" width="2400" height="1500" decoding="async" alt="The page of the system requirement Warn of a gust front: status Approved, test failed, 1 of 2 criteria verified. Its two acceptance criteria, one verified and one with a failed test, and the need it derives from."></picture></div>
-    <figcaption>A system requirement with the need it derives from and its acceptance criteria. Each criterion shows whether it is verified. The status is yours to set, with Approve, Set status or Supersede: ReqSeq never sets a status itself.</figcaption>
+    <figcaption>A system requirement with the need it derives from and its acceptance criteria. Each criterion shows whether it is verified. The status is yours to set, with Set status or Supersede: ReqSeq never sets a status itself.</figcaption>
   </figure>
   <figure class="panel" role="tabpanel" id="p-evidence" aria-labelledby="t-evidence">
     <div class="frame" style="--mw:327%;--mx:-37.5%;--my:-17%"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/demo-element-Evidence-dark.webp"><img loading="lazy" src="assets/img/demo-element-Evidence-light.webp" width="2400" height="1500" decoding="async" alt="The evidence of the requirement Warn of a gust front: criterion 1 verified by a passed test case, criterion 2 failed, each test case with the reference of its criterion in its name. Below, the form to record a check."></picture></div>
-    <figcaption>The evidence of a requirement, per acceptance criterion: the test cases that name it, with their result. A check that is no automated test, such as an inspection, is recorded on the same page.</figcaption>
+    <figcaption>The evidence of a requirement, per acceptance criterion: the test cases that name it, with their result. A check that is not an automated test, such as an inspection, is recorded on the same page.</figcaption>
   </figure>
   <figure class="panel" role="tabpanel" id="p-list" aria-labelledby="t-list">
     <div class="frame" style="--mw:300%;--mx:-53%;--my:-1%"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/demo-list-dark.webp"><img loading="lazy" src="assets/img/demo-list-light.webp" width="2400" height="1500" decoding="async" alt="The list of the 8 system requirements, each with its status and its verification status, and on the right the values to narrow the list by: status, requirement type and package."></picture></div>
@@ -267,14 +283,14 @@
 
 <section class="wrap" aria-labelledby="h-more">
   <div class="cols split">
-    <div class="head"><h2 id="h-more">Also in ReqSeq.</h2></div>
+    <div class="head"><h2 id="h-more">Baselines, variants, ReqIF and your own metamodel.</h2></div>
     <dl class="body more">
       <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/take-a-baseline/"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path pathLength="1" d="M2 10h5M13 10h5"/><circle pathLength="1" cx="10" cy="10" r="3"/></svg>Baselines</a></dt><dd>A baseline is a named state that no longer changes. Later you see what changed since, word by word.</dd></div>
       <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/manage-a-product-variant/"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle pathLength="1" cx="6" cy="4" r="1.8"/><circle pathLength="1" cx="6" cy="16" r="1.8"/><circle pathLength="1" cx="14" cy="6.5" r="1.8"/><path pathLength="1" d="M6 5.8v8.4M14 8.3c0 3.5-2.5 4.7-8 5.4"/></svg>Variants</a></dt><dd>A variant builds on the shared core and replaces or excludes single requirements.</dd></div>
       <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/exchange-requirements-with-reqif/"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path pathLength="1" d="M3 7h12M12 4l3 3-3 3M17 13H5M8 10l-3 3 3 3"/></svg>ReqIF</a></dt><dd>Import and export of ReqIF 1.2 files, to exchange requirements with other tools.</dd></div>
       <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/extend-the-metamodel/"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect pathLength="1" x="3" y="3" width="5" height="5" rx="1"/><rect pathLength="1" x="12" y="3" width="5" height="5" rx="1"/><rect pathLength="1" x="7.5" y="12" width="5" height="5" rx="1"/><path pathLength="1" d="M5.5 8v1.5c0 1 .5 1.5 1.5 1.5h6c1 0 1.5-.5 1.5-1.5V8M10 11v1"/></svg>Your metamodel</a></dt><dd>Types, properties, relation kinds and statuses belong to the workspace. It starts with a standard model you can extend.</dd></div>
       <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/publish-the-workspace-as-html/"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path pathLength="1" d="M5 2.5h7l3.5 3.5v11.5h-10.5z"/><path pathLength="1" d="M12 2.5V6h3.5M8.5 10.5 7 12l1.5 1.5M11.5 10.5 13 12l-1.5 1.5"/></svg>HTML export</a></dt><dd>The workspace as a folder of HTML pages that people read in a browser, without ReqSeq, Git or network.</dd></div>
-      <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/record-test-evidence/"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path pathLength="1" d="M1.8 10S4.8 4.5 10 4.5 18.2 10 18.2 10 15.2 15.5 10 15.5 1.8 10 1.8 10z"/><circle pathLength="1" cx="10" cy="10" r="2.5"/></svg>Checks that are no tests</a></dt><dd>An inspection or a review is recorded as a verification record, for all acceptance criteria or for some.</dd></div>
+      <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/record-test-evidence/"><svg class="ico" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path pathLength="1" d="M1.8 10S4.8 4.5 10 4.5 18.2 10 18.2 10 15.2 15.5 10 15.5 1.8 10 1.8 10z"/><circle pathLength="1" cx="10" cy="10" r="2.5"/></svg>Checks other than tests</a></dt><dd>An inspection or a review is recorded as a verification record, for all acceptance criteria or for some.</dd></div>
     </dl>
   </div>
 </section>
@@ -356,11 +372,11 @@
 
 <section class="wrap" aria-labelledby="h-start">
   <div class="cols start">
-    <div class="head"><h2 id="h-start">Try it in an empty folder.</h2></div>
+    <div class="head"><h2 id="h-start">Try it now, in an empty folder.</h2></div>
     <ol>
-      <li><span><b>Download the archive for your system and unpack it.</b> Unpacking is installing. ReqSeq needs <code>git</code> on the path.</span></li>
-      <li><span><b>Create a workspace and connect your agent.</b> <code>workspace init</code> also writes the skill file for your agent.</span></li>
-      <li><span><b>Tell your agent what you need.</b> Or work by hand: <code>reqseq ui</code> opens the web UI.</span></li>
+      <li><span><b>Download the archive for your system, unpack it and put <code>reqseq</code> on your path.</b> <a class="textlink" href="https://thomasbirkmaier.github.io/ReqSeq/how-to/install-reqseq/">Install ReqSeq</a> has the lines for your system. ReqSeq needs <code>git</code> on the path.</span></li>
+      <li><span><b>Create a workspace and connect your agent.</b> <code>workspace init</code> also writes the skill file for your agent; <a class="textlink" href="https://thomasbirkmaier.github.io/ReqSeq/how-to/connect-an-ai-agent/">Connect an AI agent</a> lists the clients.</span></li>
+      <li><span><b>Tell your agent what you need.</b> For example: “As a sailor, I want to see the wind speed before I leave the harbour.” Or work by hand: <code>reqseq ui</code> opens the web UI.</span></li>
     </ol>
     <div class="sheet" role="group" aria-label="Commands and output">
       <span class="l c">reqseq workspace init . "Weather station"</span>
@@ -378,10 +394,10 @@
       <span class="l i">reqseq element create &lt;type&gt; &lt;title&gt;              Create element</span>
       <span class="l gap"></span>
       <span class="l c">reqseq workspace <span class="nb">connect-agent</span> <span class="nb">--client</span> <span class="nb">claude-code</span></span>
+      <span class="l">Run this command in a terminal to connect Claude Code to the workspace "Weather station".</span>
     </div>
     <div class="actions">
       <a class="btn primary" href="https://github.com/ThomasBirkmaier/ReqSeq/releases/latest">Download ReqSeq</a>
-      <a class="btn" href="https://thomasbirkmaier.github.io/ReqSeq/how-to/install-reqseq/">Install ReqSeq</a>
       <a class="btn" href="https://thomasbirkmaier.github.io/ReqSeq/start/get-started/">Get started</a>
     </div>
   </div>
@@ -409,6 +425,6 @@
   <p class="note legal-links"><a href="impressum.html">Legal notice</a> · <a href="datenschutz.html">Privacy</a></p>
 </div>
 </footer>
-<script src="assets/site.js" defer></script>
+<script src="assets/site.js" defer onerror="document.body.className='no-js'"></script>
 </body>
 </html>
