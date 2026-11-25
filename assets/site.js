@@ -174,4 +174,6 @@
     });
   });
   open(tabs[0]);
+  // The other pages load once the tabs come into view, so a click shows them at once.
+  if(tabs.length)whenSeen(tabs[0].parentNode,.1,function(){each(document.querySelectorAll('.panel img[loading="lazy"]'),function(i){i.loading="eager"})});
 })();

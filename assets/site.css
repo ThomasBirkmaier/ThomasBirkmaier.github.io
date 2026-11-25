@@ -63,7 +63,7 @@ p code,li code,dd code{background:var(--sunk);border:1px solid var(--line);borde
 .textlink:hover{text-decoration-color:currentColor}
 
 /* Header */
-.top{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:26px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:24px;padding-block:16px}
 .brand{display:flex;align-items:center;gap:11px;font-weight:600;font-size:1.0625rem;letter-spacing:-.01em;text-decoration:none}
 .brand svg{flex:none}
 .logo-bg{fill:var(--logo-bg)} .logo-fg{stroke:var(--logo-fg)}
@@ -273,7 +273,7 @@ section{margin-top:var(--gap)}
 .no-js .tabs{display:none}
 .panel{margin-top:28px}
 .no-js .panel+.panel{margin-top:56px}
-.frame{border:1px solid var(--line-strong);border-radius:14px;overflow:hidden;background:var(--page);box-shadow:var(--shadow-frame);aspect-ratio:2880/1500}
+.frame{border:1px solid var(--line-strong);border-radius:14px;overflow:hidden;background:var(--page);box-shadow:var(--shadow-frame);aspect-ratio:2400/1500}
 .frame img{width:100%;height:auto}
 .panel figcaption{margin-top:22px;max-width:44em;font-size:1rem;line-height:1.55;color:var(--dim)}
 .after{margin-top:30px;max-width:44em}
@@ -381,7 +381,7 @@ footer .note{margin-top:22px}
   .lane{border-top:0;padding-top:0;margin-top:16px;margin-bottom:7px}
   .lane span{display:none}
   .lane b{font-size:.9375rem}
-  .n-sr .node-text,.n-need .node-foot,.n-tests .node-foot,.recs-h{display:none}
+  .n-sr .node-text,.n-need .node-foot,.n-tests .node-foot{display:none}
   .node{padding:13px 15px 13px}
   .link{min-height:30px}
   .link b{--dy:17px}
@@ -489,3 +489,8 @@ footer .note{margin-top:22px}
 /* A second way to start, halfway down the page. */
 .mid-cta{margin-top:calc(var(--gap) * .6)}
 .mid-cta .actions{margin-top:0;justify-content:center}
+/* The requirement page ends early: a lower frame shows it without an empty half. */
+@media (min-width:721px){#p-element .frame{aspect-ratio:2400/1050}}
+/* Larger tap targets for the links in the header and the footer. */
+.nav a{padding-block:10px}
+.foot nav a,.legal-links a{display:inline-block;padding-block:6px}
