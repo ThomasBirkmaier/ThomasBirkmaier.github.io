@@ -429,3 +429,49 @@ footer .note{margin-top:22px}
   .more>div:hover .ico,.way:hover .ico,.pillar:hover .ico,.nevers li:hover .ico{transform:scale(1.12);transition:transform 400ms var(--ease)}
   .link.flow b{animation:pulse 1100ms cubic-bezier(.45,0,.55,1)}
 }
+
+/* Narrow screens: a small chain of four chips that stays in view, and below it one card, the part that changes now.
+   Only with JavaScript and motion; otherwise the stage shows all parts one below the other. */
+.mini{display:none}
+@media (max-width:1020px){
+  .stage.compact .mini{display:grid;grid-template-columns:auto minmax(8px,1fr) auto minmax(8px,1fr) auto minmax(8px,1fr) auto;align-items:center;margin:2px 0 16px}
+  .chip{all:unset;cursor:pointer;display:flex;flex-direction:column;gap:2px;padding:7px 10px;border:1px solid var(--line-strong);border-radius:9px;background:var(--pane);opacity:.35;transition:opacity 400ms var(--ease),border-color 400ms var(--ease),box-shadow 400ms var(--ease),transform 400ms var(--ease);min-width:0}
+  .chip b{font-size:.75rem;font-weight:600;color:var(--ink);white-space:nowrap}
+  .chip-s{font-size:.6875rem;color:var(--faint);white-space:nowrap;min-height:1em}
+  .chip.on{opacity:1}
+  .chip.now{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft);transform:translateY(-2px)}
+  .chip.ok .chip-s{color:var(--accent-ink)}
+  .chip.warn{border-color:var(--warn-line)}
+  .chip.warn .chip-s{color:var(--warn)}
+  .chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .mini-l{height:0;border-top:1.5px solid var(--stroke);opacity:.3;transform:scaleX(.2);transform-origin:left;transition:opacity 400ms var(--ease),transform 500ms var(--ease)}
+  .mini-l.on{opacity:1;transform:none}
+  .mini-l.warn{border-top:1.5px dashed var(--warn-line)}
+  .stage.compact .link{display:none}
+  .stage.compact .lane,.stage.compact .node{display:none}
+  .stage.compact[data-view="1"] .lane-1,.stage.compact[data-view="1"] .n-need,
+  .stage.compact[data-view="2"] .lane-2,.stage.compact[data-view="2"] .n-sr,
+  .stage.compact[data-view="3"] .lane-3,.stage.compact[data-view="3"] .n-tests,
+  .stage.compact[data-view="4"] .lane-4,.stage.compact[data-view="4"] .n-ev{display:block;animation:swap 500ms var(--ease)}
+  .stage.compact[data-view] .node{display:none}
+  .stage.compact[data-view="1"] .n-need,.stage.compact[data-view="2"] .n-sr,.stage.compact[data-view="3"] .n-tests,.stage.compact[data-view="4"] .n-ev{display:flex}
+  .stage.compact .lane{margin-top:0}
+  .stage.compact .lane span{display:inline}
+  .stage.compact.focusing .node.on:not(.focus){opacity:1}
+  .stage.compact .chain-grid{min-height:340px;align-content:start}
+  .stage.compact .stage-head{position:static;border-bottom:0;margin-bottom:6px}
+  @keyframes swap{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+}
+@media (max-width:420px){
+  .stage.compact .mini{grid-template-columns:minmax(0,1fr) 6px minmax(0,1fr) 6px minmax(0,1fr) 6px minmax(0,1fr);align-items:stretch}
+  .mini-l{align-self:center}
+  .chip{padding:6px 7px}
+  .chip b{overflow:hidden;text-overflow:ellipsis}
+  .chip-s{white-space:normal;line-height:1.25}
+  .chip b{font-size:.6875rem}
+  .chip-s{font-size:.625rem}
+}
+@media (max-width:380px){
+  .chip{padding:6px 5px}
+  .chip b{font-size:.625rem}
+}
