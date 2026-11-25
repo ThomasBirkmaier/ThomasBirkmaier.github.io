@@ -388,3 +388,22 @@ footer .note{margin-top:22px}
   .turns{padding:2px 15px 4px}
   .turn{grid-template-columns:1fr;row-gap:2px}
 }
+
+/* Gentle motion: content rises into place as it enters, the hero settles in once, the chain keeps a quiet flow,
+   the icons draw themselves and the pages of the web UI cross-fade. All of it is off with reduced motion. */
+@media (prefers-reduced-motion:no-preference){
+  .js .rise{opacity:0;transform:translateY(18px);transition:opacity 760ms var(--ease),transform 900ms var(--ease);transition-delay:calc(var(--i,0) * 90ms)}
+  .js .rise.in{opacity:1;transform:none}
+  .js .hero h1 .w{display:inline-block;opacity:0;transform:translateY(.35em);animation:word 900ms var(--ease) forwards;animation-delay:calc(120ms + var(--i) * 55ms)}
+  @keyframes word{to{opacity:1;transform:none}}
+  .js .hero .lead,.js .hero .actions{opacity:0;animation:word 900ms var(--ease) forwards;transform:translateY(10px)}
+  .js .hero .lead{animation-delay:620ms}
+  .js .hero .actions{animation-delay:760ms}
+  .js .more .ico *{stroke-dasharray:60;stroke-dashoffset:60;transition:stroke-dashoffset 1200ms var(--ease);transition-delay:calc(200ms + var(--i,0) * 90ms)}
+  .js .more .rise.in .ico *{stroke-dashoffset:0}
+  .js .panel:not([hidden]) .frame{animation:panel 520ms var(--ease)}
+  @keyframes panel{from{opacity:0;transform:translateY(6px) scale(.995)}to{opacity:1;transform:none}}
+  .js .frame img{transition:transform 1400ms var(--ease)}
+  .js .panel .frame:hover img{transform:scale(1.012)}
+  .link.flow b{animation:pulse 1100ms cubic-bezier(.45,0,.55,1)}
+}

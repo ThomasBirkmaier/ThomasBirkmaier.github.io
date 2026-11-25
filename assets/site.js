@@ -40,8 +40,17 @@
     var step=0,run=clock(function(t){
       while(step<15&&t>=at[step+1]){step++;show(step);(pulses[step]||[]).forEach(pulse);if(pings[step])ping(pings[step])}
       fill(t);
-      return t<end;
+      if(t>=end){idle();return false}
+      return true;
     });
+    // After the story: a quiet flow along the chain, from the need to the evidence, while the stage is in view.
+    var seen=false,flowing=null;
+    if("IntersectionObserver" in window){new IntersectionObserver(function(es){seen=es[0].isIntersecting},{threshold:.2}).observe(stage)}
+    function flow(){
+      if(!seen||document.hidden)return;
+      [".l-1",".l-2",".l-3"].forEach(function(sel,k){setTimeout(function(){var l=stage.querySelector(sel);l.classList.remove("flow");void l.offsetWidth;l.classList.add("flow")},k*650)});
+    }
+    function idle(){if(!flowing&&!still){flowing=setInterval(flow,5200);setTimeout(flow,1600)}}
     function play(){step=0;show(0);fill(0);run.start()}
     each(stage.querySelectorAll(".seg"),function(b,k){b.addEventListener("click",function(){
       run.stop();step=chapterEnd[k];show(step);fill(chapterStart[k+1]);
@@ -91,6 +100,17 @@
     if(still){again.hidden=true;finish()}
     else{reset();whenSeen(root.querySelector(".session"),.35,function(){run.start()})}
   });
+
+  // Content rises into place as it enters the view, siblings one after another.
+  if(!still&&"IntersectionObserver" in window){
+    var groups=["main section h2","main section .lead",".more>div",".nevers>*",".ways>*",".tabs",".session","section[aria-labelledby=h-start] .sheet","section .own .frame","main section .body>p","main section .head>a","main section .head>p:not(.lead)"];
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{rootMargin:"0px 0px -8% 0px",threshold:.12});
+    groups.forEach(function(sel){each(document.querySelectorAll(sel),function(el){
+      if(el.closest(".stage")||el.classList.contains("rise"))return;
+      var i=0,sib=el;while((sib=sib.previousElementSibling))if(sib.matches(sel))i++;
+      el.classList.add("rise");el.style.setProperty("--i",Math.min(i,6));io.observe(el);
+    })});
+  }
 
   // The pages of the web UI: one frame, five pages.
   var tabs=[].slice.call(document.querySelectorAll('[role="tab"]'));
