@@ -35,7 +35,27 @@
       d.build=s>=14?2:1;
       each(parts,function(p){p.classList.toggle("on",s>=+p.dataset.from)});
       focusOn(s);
+      mini(s,old);
     }
+    // On a narrow screen the stage shows a small chain of four chips, always in view, and one card below it:
+    // the part that changes now. A chip opens its card and holds the story there; Replay starts it again.
+    var viewOf={1:1,2:1,3:2,4:3,5:2,6:3,7:2,8:3,9:4,10:1,11:1,12:2,13:4,14:3,15:4},chipS=stage.querySelectorAll(".chip-s"),chips=stage.querySelectorAll(".chip");
+    function view(v){stage.dataset.view=v;each(chips,function(c){c.classList.toggle("now",+c.dataset.view===v)})}
+    function mini(s,old){
+      if(!chipS.length)return;
+      var t=[
+        s<1?"":s>=10?"changed":"plain words",
+        s<3?"":s===11||s===12?"to review":s>=12&&s<15?"changed":"2 criteria",
+        s<4?"":old?"older version":(s>=8?2:s>=6?1:0)+" of 2 passed",
+        s<6?"":old?"outdated":s>=9?"verified":"open"];
+      each(chipS,function(e,k){e.textContent=t[k]});
+      each(chips,function(c,k){c.classList.toggle("on",t[k]!=="");c.classList.toggle("warn",(k===1&&s===11)||(k===3&&old));c.classList.toggle("ok",k===3&&!old&&s>=9)});
+      stage.querySelector(".m-1").className="mini-l m-1"+(s>=2?" on":"")+(s===11?" warn":"");
+      stage.querySelector(".m-2").className="mini-l m-2"+(s>=4?" on":"");
+      stage.querySelector(".m-3").className="mini-l m-3"+(s>=6?" on":"")+(old?" warn":"");
+      if(viewOf[s])view(viewOf[s]);
+    }
+    each(chips,function(c){c.addEventListener("click",function(){if(c.classList.contains("on")){run.stop();view(+c.dataset.view)}})});
     // Where to look: the part that just changed is lifted and ringed, the rest steps back a little.
     var focus={1:[".n-need"],2:[".l-1"],3:[".n-sr"],4:[".l-2",".n-tests"],5:[".n-sr .crit",".n-tests"],6:[".n-tests .t1",".l-3",".n-ev"],7:[".n-sr .c1",".n-ev"],8:[".n-tests .t2"],9:[".n-sr .c2",".n-ev"],10:[".n-need"],11:[".l-1"],12:[".n-sr"],13:[".l-3",".n-ev"],14:[".n-tests",".l-3"],15:[".n-ev"]};
     function focusOn(s){
@@ -67,6 +87,7 @@
       run.stop();focusing=true;step=chapterEnd[k];show(step);fill(chapterStart[k+1]);
     })});
     document.getElementById("stage-replay").addEventListener("click",play);
+    if(!still)stage.classList.add("compact");
     if(still){stage.classList.add("still");show(15);fill(end)}
     else{show(0);whenSeen(stage,.45,play)}
   })();
