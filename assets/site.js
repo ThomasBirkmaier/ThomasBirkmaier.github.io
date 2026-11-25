@@ -16,8 +16,9 @@
   // The stage: fifteen small steps in seven chapters. Each step is a complete state, so any chapter can be shown directly.
   (function(){
     var stage=document.getElementById("stage"),parts=stage.querySelectorAll("[data-from]"),segs=stage.querySelectorAll(".seg i");
-    var at=[0,250,1900,2300,4500,5200,6900,7600,8200,8800,10900,11700,13400,14200,16100,16900],end=19000;
-    var chapterOf=[0,1,2,2,3,3,4,4,4,4,5,5,6,6,7,7],chapterStart=[250,1900,4500,6900,10900,13400,16100,end],chapterEnd=[1,3,5,9,11,13,15];
+    // 30 % slower than the first cut, so each change can be followed.
+    var slow=1.3,at=[0,250,1900,2300,4500,5200,6900,7600,8200,8800,10900,11700,13400,14200,16100,16900].map(function(v){return Math.round(v*slow)}),end=Math.round(19000*slow);
+    var chapterOf=[0,1,2,2,3,3,4,4,4,4,5,5,6,6,7,7],chapterStart=[at[1],at[2],at[4],at[6],at[10],at[12],at[14],end],chapterEnd=[1,3,5,9,11,13,15];
     var pulses={2:[".l-1"],5:[".l-2"],6:[".l-3"],8:[".l-3"],14:[".l-3"]},pings={10:".n-need",11:".n-sr amber",12:".n-sr",13:".n-ev amber",15:".n-ev"};
     function show(s){
       var d=stage.dataset,old=s===13||s===14;
@@ -33,14 +34,24 @@
       d.ver=old?"old":s>=9?"ok":"open";
       d.build=s>=14?2:1;
       each(parts,function(p){p.classList.toggle("on",s>=+p.dataset.from)});
+      focusOn(s);
     }
+    // Where to look: the part that just changed is lifted and ringed, the rest steps back a little.
+    var focus={1:[".n-need"],2:[".l-1"],3:[".n-sr"],4:[".l-2",".n-tests"],5:[".n-sr .crit",".n-tests"],6:[".n-tests .t1",".l-3",".n-ev"],7:[".n-sr .c1",".n-ev"],8:[".n-tests .t2"],9:[".n-sr .c2",".n-ev"],10:[".n-need"],11:[".l-1"],12:[".n-sr"],13:[".l-3",".n-ev"],14:[".n-tests",".l-3"],15:[".n-ev"]};
+    function focusOn(s){
+      each(stage.querySelectorAll(".focus"),function(el){el.classList.remove("focus")});
+      var sel=focusing?focus[s]:null;
+      stage.classList.toggle("focusing",!!sel);
+      (sel||[]).forEach(function(q){each(stage.querySelectorAll(q),function(el){el.classList.add("focus");var n=el.closest(".node");if(n)n.classList.add("focus")})});
+    }
+    var focusing=false;
     function fill(t){each(segs,function(i,k){var a=chapterStart[k],b=chapterStart[k+1];i.style.transform="scaleX("+Math.max(0,Math.min(1,(t-a)/(b-a)))+")"})}
     function pulse(sel){var l=stage.querySelector(sel);l.classList.remove("go");void l.offsetWidth;l.classList.add("go")}
     function ping(what){var w=what.split(" "),n=stage.querySelector(w[0]);n.classList.remove("ping","amber");void n.offsetWidth;n.classList.add("ping");if(w[1])n.classList.add(w[1])}
     var step=0,run=clock(function(t){
       while(step<15&&t>=at[step+1]){step++;show(step);(pulses[step]||[]).forEach(pulse);if(pings[step])ping(pings[step])}
       fill(t);
-      if(t>=end){idle();return false}
+      if(t>=end){focusing=false;focusOn(15);idle();return false}
       return true;
     });
     // After the story: a quiet flow along the chain, from the need to the evidence, while the stage is in view.
@@ -51,9 +62,9 @@
       [".l-1",".l-2",".l-3"].forEach(function(sel,k){setTimeout(function(){var l=stage.querySelector(sel);l.classList.remove("flow");void l.offsetWidth;l.classList.add("flow")},k*650)});
     }
     function idle(){if(!flowing&&!still){flowing=setInterval(flow,5200);setTimeout(flow,1600)}}
-    function play(){step=0;show(0);fill(0);run.start()}
+    function play(){focusing=true;step=0;show(0);fill(0);run.start()}
     each(stage.querySelectorAll(".seg"),function(b,k){b.addEventListener("click",function(){
-      run.stop();step=chapterEnd[k];show(step);fill(chapterStart[k+1]);
+      run.stop();focusing=true;step=chapterEnd[k];show(step);fill(chapterStart[k+1]);
     })});
     document.getElementById("stage-replay").addEventListener("click",play);
     if(still){stage.classList.add("still");show(15);fill(end)}
@@ -103,7 +114,7 @@
 
   // Content rises into place as it enters the view, siblings one after another.
   if(!still&&"IntersectionObserver" in window){
-    var groups=["main section h2","main section .lead",".more>div",".nevers>*",".ways>*",".tabs",".session","section[aria-labelledby=h-start] .sheet","section .own .frame","main section .body>p","main section .head>a","main section .head>p:not(.lead)"];
+    var groups=["main section h2","main section .lead",".more>div",".pillar",".nevers>*",".ways>*",".tabs",".session","section[aria-labelledby=h-start] .sheet","section .own .frame","#p-overview .frame","main section .body>p","main section .head>a","main section .head>p:not(.lead)"];
     var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{rootMargin:"0px 0px -8% 0px",threshold:.12});
     groups.forEach(function(sel){each(document.querySelectorAll(sel),function(el){
       if(el.closest(".stage")||el.classList.contains("rise"))return;
