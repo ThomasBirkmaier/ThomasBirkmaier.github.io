@@ -10,7 +10,7 @@
   function clock(tick){
     var last=0,t=0,on=false;
     function frame(now){if(!on)return;t+=Math.min(now-last,80);last=now;if(tick(t)!==false)requestAnimationFrame(frame);else on=false}
-    return {start:function(){t=0;last=performance.now();if(!on){on=true;requestAnimationFrame(frame)}},stop:function(){on=false}};
+    return {start:function(){t=0;this.resume()},resume:function(){last=performance.now();if(!on){on=true;requestAnimationFrame(frame)}},stop:function(){on=false},running:function(){return on}};
   }
 
   // The stage: fifteen small steps in seven chapters. Each step is a complete state, so any chapter can be shown directly.
@@ -40,11 +40,11 @@
     // On a narrow screen the stage shows a small chain of four chips, always in view, and one card below it:
     // the part that changes now. A chip opens its card and holds the story there; Replay starts it again.
     var viewOf={1:1,2:1,3:2,4:3,5:2,6:3,7:2,8:3,9:4,10:1,11:1,12:2,13:4,14:3,15:4},chipS=stage.querySelectorAll(".chip-s"),chips=stage.querySelectorAll(".chip");
-    function view(v){stage.dataset.view=v;each(chips,function(c){c.classList.toggle("now",+c.dataset.view===v)})}
+    function view(v){stage.dataset.view=v;each(chips,function(c){var on=+c.dataset.view===v;c.classList.toggle("now",on);c.setAttribute("aria-pressed",on?"true":"false")})}
     function mini(s,old){
       if(!chipS.length)return;
       var t=[
-        s<1?"":s>=10?"changed":"plain words",
+        s<1?"":s>=10&&s<15?"changed":"plain words",
         s<3?"":s===11||s===12?"to review":s>=12&&s<15?"changed":"2 criteria",
         s<4?"":old?"older version":(s>=8?2:s>=6?1:0)+" of 2 passed",
         s<6?"":old?"outdated":s>=9?"verified":"open"];
@@ -55,7 +55,7 @@
       stage.querySelector(".m-3").className="mini-l m-3"+(s>=6?" on":"")+(old?" warn":"");
       if(viewOf[s])view(viewOf[s]);
     }
-    each(chips,function(c){c.addEventListener("click",function(){if(c.classList.contains("on")){run.stop();view(+c.dataset.view)}})});
+    each(chips,function(c){c.addEventListener("click",function(){if(c.classList.contains("on")){pause();view(+c.dataset.view)}})});
     // Where to look: the part that just changed is lifted and ringed, the rest steps back a little.
     var focus={1:[".n-need"],2:[".l-1"],3:[".n-sr"],4:[".l-2",".n-tests"],5:[".n-sr .crit",".n-tests"],6:[".n-tests .t1",".l-3",".n-ev"],7:[".n-sr .c1",".n-ev"],8:[".n-tests .t2"],9:[".n-sr .c2",".n-ev"],10:[".n-need"],11:[".l-1"],12:[".n-sr"],13:[".l-3",".n-ev"],14:[".n-tests",".l-3"],15:[".n-ev"]};
     function focusOn(s){
@@ -71,7 +71,7 @@
     var step=0,run=clock(function(t){
       while(step<15&&t>=at[step+1]){step++;show(step);(pulses[step]||[]).forEach(pulse);if(pings[step])ping(pings[step])}
       fill(t);
-      if(t>=end){focusing=false;focusOn(15);idle();return false}
+      if(t>=end){focusing=false;focusOn(15);label("Replay");idle();return false}
       return true;
     });
     // After the story: a quiet flow along the chain, from the need to the evidence, while the stage is in view.
@@ -81,15 +81,26 @@
       if(!seen||document.hidden)return;
       [".l-1",".l-2",".l-3"].forEach(function(sel,k){setTimeout(function(){var l=stage.querySelector(sel);l.classList.remove("flow");void l.offsetWidth;l.classList.add("flow")},k*650)});
     }
-    function idle(){if(!flowing&&!still){flowing=setInterval(flow,5200);setTimeout(flow,1600)}}
-    function play(){focusing=true;step=0;show(0);fill(0);run.start()}
+    // Three quiet rounds, then the stage rests.
+    function idle(){if(!flowing&&!still){var n=0;flowing=setInterval(function(){flow();if(++n>=2){clearInterval(flowing);flowing=null}},5200);setTimeout(flow,1600)}}
+    // The button under the story: Pause while it runs, Play after a pause, Replay at the end.
+    var btn=document.getElementById("stage-replay"),release=0;
+    function label(t){btn.textContent=t}
+    function play(){clearTimeout(release);focusing=true;step=0;show(0);fill(0);run.start();label("Pause")}
+    function pause(){if(run.running()){run.stop();label(step<15?"Play":"Replay")}}
+    // A chosen step shows its highlight for a moment, then all cards read at full strength.
+    function settle(){clearTimeout(release);release=setTimeout(function(){focusing=false;focusOn(step)},2500)}
     each(stage.querySelectorAll(".seg"),function(b,k){b.addEventListener("click",function(){
-      run.stop();focusing=true;step=chapterEnd[k];show(step);fill(chapterStart[k+1]);
+      run.stop();label("Replay");focusing=true;step=chapterEnd[k];show(step);fill(chapterStart[k+1]);settle();each(segs,function(x,j){var el=x.parentNode.parentNode;if(j===k)el.setAttribute("aria-current","step");else el.removeAttribute("aria-current")})
     })});
-    document.getElementById("stage-replay").addEventListener("click",play);
+    btn.addEventListener("click",function(){if(run.running())pause();else if(btn.textContent==="Play"){clearTimeout(release);focusing=true;run.resume();label("Pause")}else play()});
     if(!still)stage.classList.add("compact");
-    if(still){stage.classList.add("still");show(15);fill(end)}
-    else{show(0);whenSeen(stage,.45,play)}
+    if(still){stage.classList.add("still");show(15);fill(end);stage.dataset.ch=0}
+    else{
+      // The story starts once its cards are fully in view, so its end is not played below the fold.
+      var grid=stage.querySelector(".chain-grid");
+      show(0);whenSeen(grid,Math.min(.9,innerHeight*.85/Math.max(grid.offsetHeight,1)),play);
+    }
   })();
 
   // Played sessions: the parts appear in the order of the page, a typed part letter by letter.

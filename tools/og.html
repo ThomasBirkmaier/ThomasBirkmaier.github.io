@@ -1,0 +1,24 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:P;font-weight:400;src:url(../assets/fonts/ibm-plex-sans-400.woff2)}
+@font-face{font-family:P;font-weight:500;src:url(../assets/fonts/ibm-plex-sans-500.woff2)}
+@font-face{font-family:P;font-weight:600;src:url(../assets/fonts/ibm-plex-sans-600.woff2)}
+*{box-sizing:border-box;margin:0}
+body{width:1200px;height:630px;background:#eef0f1;color:#14181d;font-family:P,sans-serif;padding:64px 72px;display:flex;flex-direction:column;position:relative;overflow:hidden}
+body::after{content:"";position:absolute;right:-180px;top:-220px;width:620px;height:620px;border-radius:50%;background:radial-gradient(circle,#d9ebe7 0,rgba(217,235,231,0) 70%)}
+.brand{display:flex;align-items:center;gap:16px;font-weight:600;font-size:34px;position:relative;z-index:1}
+h1{font-weight:500;font-size:66px;line-height:1.08;letter-spacing:-.025em;margin-top:44px;max-width:980px;position:relative;z-index:1}
+.chain{display:flex;align-items:center;margin-top:auto;position:relative;z-index:1}
+.b{background:#fff;border:2px solid #cdd2d7;border-radius:16px;padding:18px 26px;font-size:30px;font-weight:500;white-space:nowrap}
+.b small{display:block;font-size:20px;font-weight:400;color:#4f5962;margin-top:2px}
+.l{flex:1;height:0;border-top:3px solid #0b6b61;min-width:26px}
+.ok{border-color:#0b6b61;box-shadow:0 0 0 6px #d9ebe7}
+.ok small{color:#08544c;font-weight:500}
+</style></head><body>
+<div class="brand"><svg width="52" height="52" viewBox="0 0 32 32"><rect fill="#14181d" width="32" height="32" rx="8"/><path stroke="#fff" d="M10 9h7a5 5 0 0 1 0 10h-7zM10 19v4M17 19l5 4" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>ReqSeq</div>
+<h1>Tell your agent what you need. See which tests verify it.</h1>
+<div class="chain">
+<div class="b">Need<small>plain words</small></div><i class="l"></i>
+<div class="b">Requirement<small>2 criteria</small></div><i class="l"></i>
+<div class="b">Tests<small>2 of 2 passed</small></div><i class="l"></i>
+<div class="b ok">Status<small>● verified</small></div>
+</div></body></html>
