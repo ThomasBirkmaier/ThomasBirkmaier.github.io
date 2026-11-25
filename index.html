@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>ReqSeq: requirements, traced from the need to the test that shows them</title>
+<meta name="description" content="ReqSeq is requirements engineering for agents and people. It traces a need through system requirements, acceptance criteria and tests to the evidence record of each test run, as Markdown files in your Git repository.">
+<link rel="canonical" href="https://thomasbirkmaier.github.io/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thomasbirkmaier.github.io/">
+<meta property="og:title" content="ReqSeq: requirements, traced from the need to the test that shows them">
+<meta property="og:description" content="Tell your agent what you need. It breaks the need down into system requirements, acceptance criteria and tests, and ReqSeq traces them through to the evidence record of each test run.">
+<meta property="og:image" content="https://thomasbirkmaier.github.io/assets/img/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body class="no-js">
+<script>document.body.className="js"</script>
+<a class="skip" href="#main">Skip to the content</a>
+
+<header class="wrap top">
+  <a class="brand" href="#" aria-label="ReqSeq">
+    <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true"><rect class="logo-bg" width="32" height="32" rx="8"/><path class="logo-fg" d="M10 9h7a5 5 0 0 1 0 10h-7zM10 19v4M17 19l5 4" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    ReqSeq
+  </a>
+  <nav class="nav" aria-label="ReqSeq">
+    <a class="keep" href="https://thomasbirkmaier.github.io/ReqSeq/">Docs</a>
+    <a href="https://thomasbirkmaier.github.io/ReqSeq/spec/">Specification</a>
+    <a class="keep" href="https://github.com/ThomasBirkmaier/ReqSeq">GitHub</a>
+  </nav>
+</header>
+
+<main id="main">
+
+<div class="wrap hero">
+  <h1>What you asked your agent for, traced to the test that shows it.</h1>
+  <p class="lead">Tell your agent what you need. It breaks the need down into system requirements, acceptance criteria and tests, and ReqSeq traces them through to the evidence record of each test run. You keep the whole chain, not one specification document.</p>
+  <div class="actions">
+    <a class="btn primary" href="https://github.com/ThomasBirkmaier/ReqSeq/releases/latest">Download ReqSeq</a>
+    <a class="btn" href="https://thomasbirkmaier.github.io/ReqSeq/start/get-started/">Get started</a>
+    <p class="note">For macOS on Apple silicon, Linux x64 and Windows x64. <br>It runs on your computer and opens no network connection.</p>
+  </div>
+
+  <div class="stage" id="stage" role="group" aria-label="The chain from a need to its evidence, shown in seven steps" data-ch="7" data-need="3" data-sr="3" data-rel="ok" data-keys="0" data-t1="1" data-t2="1" data-c1="ok" data-c2="ok" data-count="2" data-ver="ok" data-build="2">
+    <div class="stage-head">
+      <p class="say" aria-hidden="true">
+        <span data-c="1">You describe a need in plain words.</span>
+        <span data-c="2">Your agent derives a system requirement from it, with acceptance criteria.</span>
+        <span data-c="3">Each test names the acceptance criterion it checks, by its key.</span>
+        <span data-c="4">The test results come in as JUnit XML. ReqSeq computes the status: verified.</span>
+        <span data-c="5">Later the need changes. The relation still holds its old version, so it shows as outdated.</span>
+        <span data-c="6">You review the requirement, and it changes too. Its evidence is for the older version.</span>
+        <span data-c="7">The tests run again. The requirement is verified, for the version it has now.</span>
+      </p>
+      <div class="ctl">
+        <div class="segs" id="segs">
+          <button class="seg" type="button" aria-label="Step 1: the need"><span><i></i></span></button>
+          <button class="seg" type="button" aria-label="Step 2: the system requirement"><span><i></i></span></button>
+          <button class="seg" type="button" aria-label="Step 3: the tests"><span><i></i></span></button>
+          <button class="seg" type="button" aria-label="Step 4: verified"><span><i></i></span></button>
+          <button class="seg" type="button" aria-label="Step 5: the need changes"><span><i></i></span></button>
+          <button class="seg" type="button" aria-label="Step 6: the evidence is outdated"><span><i></i></span></button>
+          <button class="seg" type="button" aria-label="Step 7: verified again"><span><i></i></span></button>
+        </div>
+        <button class="replay" type="button" id="stage-replay">Replay</button>
+      </div>
+    </div>
+    <div class="chain-grid">
+      <div class="lane lane-1"><b>You</b><span>say what you need, in plain words.</span></div>
+      <div class="node n-need rv" data-from="1">
+        <div class="node-kind"><span>Need</span><span class="mono">N-7fe707</span></div>
+        <div class="sw sw-need">
+          <q class="v1" aria-hidden="true">As a sailor, I want to see the wind speed before I leave the harbour.</q>
+          <q class="v2" aria-hidden="true">As a sailor, I want to see the wind speed <ins>as it is right now,</ins> before I leave the harbour.</q>
+          <q class="v3">As a sailor, I want to see the wind speed as it is right now, before I leave the harbour.</q>
+        </div>
+        <div class="node-foot"><span>Version</span><span class="sw sw-need"><span class="mono v1" aria-hidden="true">n2:8719f198…</span><span class="mono v2" aria-hidden="true">n2:240939ee…</span><span class="mono v3">n2:240939ee…</span></span></div>
+      </div>
+      <div class="link l-1 rv" data-from="2" aria-hidden="true"><div class="cap sw sw-rel"><span class="ok">derives from</span><span class="old">outdated</span></div><i></i><u></u><b></b></div>
+
+      <div class="lane lane-2"><b>Your agent</b><span>derives the system requirement and its acceptance criteria.</span></div>
+      <div class="node n-sr rv" data-from="3">
+        <div class="node-kind"><span>System requirement</span><span class="mono">SR-c67baa</span></div>
+        <div class="node-title">Show the wind speed</div>
+        <div class="node-text sw sw-sr">
+          <span class="v1" aria-hidden="true">The station must show the wind speed in knots, updated every 10 seconds.</span>
+          <span class="v2" aria-hidden="true">The station must show the wind speed in knots, updated every <ins>5 seconds.</ins></span>
+          <span class="v3">The station must show the wind speed in knots, updated every 5 seconds.</span>
+        </div>
+        <ul class="crit" aria-label="Acceptance criteria">
+          <li class="c1 rv d1" data-from="3"><span class="dot"><i class="open"></i><i class="ok"></i><i class="old"></i></span><span>The speed is shown in knots, with one decimal.</span><span class="key">k7f3</span></li>
+          <li class="c2 rv d2" data-from="3"><span class="dot"><i class="open"></i><i class="ok"></i><i class="old"></i></span><span class="sw sw-sr"><span class="v1" aria-hidden="true">The value is at most 10 seconds old.</span><span class="v2" aria-hidden="true">The value is at most <ins>5 seconds</ins> old.</span><span class="v3">The value is at most 5 seconds old.</span></span><span class="key">q91q</span></li>
+        </ul>
+        <div class="node-foot"><span>Version</span><span class="sw sw-sr"><span class="mono v1" aria-hidden="true">n2:9423eca5…</span><span class="mono v2" aria-hidden="true">n2:13473508…</span><span class="mono v3">n2:13473508…</span></span></div>
+      </div>
+      <div class="link l-2 rv" data-from="4" aria-hidden="true"><div class="cap"><span>criterion key</span></div><i></i><b></b></div>
+
+      <div class="lane lane-3"><b>Your tests</b><span>name the acceptance criterion they check.</span></div>
+      <div class="node n-tests rv" data-from="4">
+        <div class="node-kind"><span>Tests</span><span class="mono">wind.test.ts</span></div>
+        <ul class="tests">
+          <li class="t1"><span class="ref">[SR-c67baa/AK-<span class="key">k7f3</span>]</span><span>shows the wind speed in knots</span><span class="passed">Passed</span></li>
+          <li class="t2"><span class="ref">[SR-c67baa/AK-<span class="key">q91q</span>]</span><span>updates the value in time</span><span class="passed">Passed</span></li>
+        </ul>
+        <div class="node-foot"><span>JUnit XML</span><span class="sw sw-build"><span class="mono v1" aria-hidden="true">results-build-1.xml</span><span class="mono v2">results-build-2.xml</span></span></div>
+      </div>
+      <div class="link l-3 rv" data-from="6" aria-hidden="true"><div class="cap"><span>JUnit XML</span></div><i></i><u></u><b></b></div>
+
+      <div class="lane lane-4"><b>ReqSeq</b><span>computes the verification status.</span></div>
+      <div class="node n-ev rv" data-from="6">
+        <div class="node-kind"><span>Verification status</span></div>
+        <div class="stat sw sw-ver"><span class="open" aria-hidden="true">Open</span><span class="ok">Verified</span><span class="old" aria-hidden="true">Outdated</span></div>
+        <div class="node-text"><span class="sw sw-count"><span class="c0" aria-hidden="true">0</span><span class="c1" aria-hidden="true">1</span><span class="c2">2</span></span> of 2 criteria verified</div>
+        <div class="recs">
+          <div class="recs-h"><span>Evidence record</span><span>for version</span></div>
+          <div class="rec r1 rv d1" data-from="6"><span class="mono">build-1</span><span class="mono v">n2:9423eca5…</span></div>
+          <div class="rec r2 rv" data-from="15"><span class="mono">build-2</span><span class="mono v">n2:13473508…</span></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="note">The example from Get started. The versions are the ones ReqSeq 0.14.0 computes for these texts; the IDs and keys are examples.</p>
+  </div>
+</div>
+
+<section class="wrap" aria-labelledby="h-two">
+  <div class="cols">
+    <div class="head">
+      <h2 id="h-two">Through your agent, in the web UI, or both.</h2>
+    </div>
+  </div>
+  <div class="pillars">
+    <div class="pillar">
+      <h3>Through your agent</h3>
+      <p>You talk to your agent. It writes the needs, system requirements, acceptance criteria and tests, through ReqSeq's MCP server or CLI. Every command reports what the elements still lack, so the agent has its next step, even if you never open the web UI.</p>
+      <p><a class="textlink" href="#h-agent">How the agent works with ReqSeq</a></p>
+    </div>
+    <div class="pillar">
+      <h3>In the web UI</h3>
+      <p>A requirements engineer works in the web UI, with or without an agent: writes and reviews requirements, sets their status, follows the trace and takes baselines. The web UI runs the same commands as the CLI and the MCP server.</p>
+      <p><a class="textlink" href="#h-ui">The web UI</a></p>
+    </div>
+  </div>
+  <p class="join">Both work on the same Markdown files in your Git repository. <b>Each way works on its own. Together, the agent writes and people decide.</b></p>
+</section>
+
+<section class="wrap" aria-labelledby="h-agent">
+  <div class="cols player" id="mcp" data-phase="0">
+    <div class="side">
+      <h2 id="h-agent">Talk to your agent. It keeps the requirements.</h2>
+      <p class="lead">ReqSeq does not run an agent itself. You talk to your own agent. It calls ReqSeq's commands, and the skill file that <code>workspace init</code> writes tells it how to work with them.</p>
+      <ol class="sync">
+        <li data-p="1"><span><b>You say what you need.</b> In your agent's chat, in plain words.</span></li>
+        <li data-p="2"><span><b>The agent writes the elements.</b> A need, a system requirement with its acceptance criteria, and the relation between them, through the tools of the MCP server.</span></li>
+        <li data-p="3"><span><b>ReqSeq answers with what is missing.</b> Here the new requirement has no parent yet. The agent adds the relation, and the next answer names no problem.</span></li>
+      </ol>
+    </div>
+    <div class="session">
+      <div class="turns" role="group" aria-label="A session of an agent with the MCP server of ReqSeq">
+        <div class="turn" data-d="300" data-phase="1"><span class="who">You</span><div><q class="type" data-d="200">As a sailor, I want to see the wind speed before I leave the harbour.</q></div></div>
+        <div class="turn" data-d="900" data-phase="2"><span class="who">Agent</span><div><span class="tool">element_create</span><div class="args"><span class="jl" style="--in:0ch">{ "type": "need",</span><span class="jl" style="--in:2ch">"title": "See the wind speed",</span><span class="jl" style="--in:2ch">"text": "As a sailor, I want to see the wind speed before I leave the harbour." }</span></div></div></div>
+        <div class="turn" data-d="800"><span class="who">ReqSeq</span><div class="res">Created Need <span class="nb">N-7fe707</span>; 1 file written.</div></div>
+        <div class="turn" data-d="1100"><span class="who">Agent</span><div><span class="tool">element_create</span><div class="args"><span class="jl" style="--in:0ch">{ "type": "<span class="nb">system-requirement</span>",</span><span class="jl" style="--in:2ch">"title": "Show the wind speed",</span><span class="jl" style="--in:2ch">"text": "The station must show the wind speed in knots, updated every 10 seconds.",</span><span class="jl" style="--in:2ch">"properties": {</span><span class="jl" style="--in:4ch">"<span class="nb">requirement-type</span>": "functional",</span><span class="jl" style="--in:4ch">"<span class="nb">acceptance-criteria</span>": [</span><span class="jl" style="--in:6ch">"The speed is shown in knots, with one decimal.",</span><span class="jl" style="--in:6ch">"The value is at most 10 seconds old." ] } }</span></div></div></div>
+        <div class="turn" data-d="900" data-phase="3"><span class="who">ReqSeq</span><div class="res">Created System Requirement <span class="nb">SR-c67baa</span>; 1 file written; 1 problem.<span class="prob"><span class="w">warning</span>  <span class="nb">trace.no-parent</span>  System Requirement <span class="nb">SR-c67baa</span> has no parent: no relation with the meaning derivation names one</span></div></div>
+        <div class="turn" data-d="1500"><span class="who">Agent</span><div><span class="tool">relation_add</span><div class="args"><span class="jl" style="--in:0ch">{ "source": "<span class="nb">SR-c67baa</span>", "kind": "<span class="nb">derives-from</span>", "target": "<span class="nb">N-7fe707</span>" }</span></div></div></div>
+        <div class="turn" data-d="800"><span class="who">ReqSeq</span><div class="res">Added a <span class="nb">derives-from</span> relation from <span class="nb">SR-c67baa</span> to <span class="nb">N-7fe707</span>; 1 file written.</div></div>
+      </div>
+      <div class="panel-foot"><span>Tool calls and answers of ReqSeq 0.14.0. The IDs are examples.</span><button class="replay" type="button">Replay</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" aria-labelledby="h-tests">
+  <div class="cols">
+    <div class="head">
+      <h2 id="h-tests">Your tests name the requirement. ReqSeq computes what is verified.</h2>
+      <p class="lead">A test names the requirement and the acceptance criterion it checks, in its name. Any test tool that writes JUnit XML works, without a converter or plugin.</p>
+    </div>
+  </div>
+  <div class="cols wide player" id="cli" data-phase="0">
+    <div class="side">
+      <ol class="sync">
+        <li data-p="1"><span><b>One command adds the version.</b> <code>evidence enrich-junit</code> adds the current version of each named requirement to the JUnit file.</span></li>
+        <li data-p="2"><span><b>ReqSeq computes the status.</b> Verified when the newest result for the current version passed. Outdated when the results are for an older version only.</span></li>
+        <li data-p="3"><span><b>In a pipeline, the check decides.</b> <code>workspace check</code> decides by its exit code whether the step passes.</span></li>
+      </ol>
+    </div>
+    <div class="session">
+      <div class="sheet" role="group" aria-label="Two tests">
+        <span class="sheet-name">wind.test.ts</span>
+        <span class="l k"><span class="nb">it("[SR-c67baa</span>/<wbr><span class="nb">AK-k7f3]</span> shows the wind speed in knots", () =&gt; { /* ... */ });</span>
+        <span class="l k"><span class="nb">it("[SR-c67baa</span>/<wbr><span class="nb">AK-q91q]</span> updates the value in time", () =&gt; { /* ... */ });</span>
+      </div>
+      <div class="sheet" role="group" aria-label="Commands and what ReqSeq prints">
+        <span data-d="400" data-phase="1" class="l c type">reqseq evidence <span class="nb">enrich-junit</span> evidence/<wbr>ci/<wbr><span class="nb">results-build-1.xml</span> <span class="nb">build-1</span></span>
+        <span data-d="350" class="l">Enriched 2 test cases; 1 file written.</span>
+        <span data-d="70" class="l">testCases: 2</span>
+        <span data-d="70" class="l">withoutReference: 0</span>
+        <span data-d="70" class="l">notInView: 0</span>
+        <span data-d="70" class="l">unknown: none</span>
+        <span data-d="70" class="l">files:</span>
+        <span data-d="70" class="l i">evidence/<wbr>ci/<wbr><span class="nb">results-build-1.xml</span></span>
+        <span data-d="70" class="l">No problems.</span>
+        <span class="l gap"></span>
+        <span data-d="1300" data-phase="2" class="l c type">reqseq evidence status</span>
+        <span data-d="350" class="l">Listed the verification status of 2 elements.</span>
+        <span data-d="70" class="l">elements:</span>
+        <span data-d="70" class="l i"><span class="nb">N-7fe707</span>  draft  See the wind speed  [validation: open]</span>
+        <span data-d="70" class="l i"><span class="nb">SR-c67baa</span>  draft  Show the wind speed  [verification: core (<span class="ok">verified, 2 of 2 criteria</span>)]</span>
+        <span data-d="70" class="l">total: 2</span>
+        <span class="l gap"></span>
+        <span data-d="1500" data-phase="3" class="l c type">reqseq workspace check <span class="nb">--fail-on</span> warning</span>
+        <span data-d="350" class="l">Checked 2 elements and found no problem.</span>
+        <span data-d="70" class="l">ok: true</span>
+        <span data-d="70" class="l">checkedElements: 2</span>
+        <span data-d="70" class="l">No problems.</span>
+      </div>
+      <div class="panel-foot"><span>Commands and output of ReqSeq 0.14.0. The IDs and keys are examples.</span><button class="replay" type="button">Replay</button></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" aria-labelledby="h-ui">
+  <div class="cols">
+    <div class="head">
+      <h2 id="h-ui">Requirements engineering in the web UI, with or without an agent.</h2>
+      <p class="lead"><code>reqseq ui</code> starts the web UI on your computer and opens it in your browser. It works on the same files, through the same commands as your agent. Only people set a status.</p>
+    </div>
+  </div>
+  <div class="tabs" role="tablist" aria-label="Pages of the web UI">
+    <button role="tab" id="t-overview" aria-controls="p-overview" aria-selected="true">Overview</button>
+    <button role="tab" id="t-element" aria-controls="p-element" aria-selected="false" tabindex="-1">Requirement</button>
+    <button role="tab" id="t-evidence" aria-controls="p-evidence" aria-selected="false" tabindex="-1">Evidence</button>
+    <button role="tab" id="t-list" aria-controls="p-list" aria-selected="false" tabindex="-1">List</button>
+    <button role="tab" id="t-matrix" aria-controls="p-matrix" aria-selected="false" tabindex="-1">Trace matrix</button>
+  </div>
+  <figure class="panel" role="tabpanel" id="p-overview" aria-labelledby="t-overview">
+    <div class="frame" style="--mw:327%;--mx:-151%;--my:-3.4%"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/demo-overview-dark.webp"><img src="assets/img/demo-overview-light.webp" width="2400" height="1500" decoding="async" alt="The overview of the example workspace Weather station: 4 of 8 system requirements are verified, 1 has outdated evidence, 1 a failed test and 2 no evidence yet. Beside it the queues Evidence outdated and Drafts to decide."></picture></div>
+    <figcaption>The overview counts what is verified and lists what needs a look or a decision: evidence that is outdated, drafts to decide, and the changes since the newest baseline.</figcaption>
+  </figure>
+  <figure class="panel" role="tabpanel" id="p-element" aria-labelledby="t-element">
+    <div class="frame" style="--mw:300%;--mx:-75%;--my:-14.6%"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/demo-element-dark.webp"><img loading="lazy" src="assets/img/demo-element-light.webp" width="2400" height="1500" decoding="async" alt="The page of the system requirement Warn of a gust front: status Approved, test failed, 1 of 2 criteria verified. Its two acceptance criteria, one verified and one with a failed test, and the need it derives from."></picture></div>
+    <figcaption>A system requirement with the need it derives from and its acceptance criteria. Each criterion shows whether it is verified. The status is yours to set, with Approve, Set status or Supersede: ReqSeq never sets a status itself.</figcaption>
+  </figure>
+  <figure class="panel" role="tabpanel" id="p-evidence" aria-labelledby="t-evidence">
+    <div class="frame" style="--mw:327%;--mx:-37.5%;--my:-17%"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/demo-element-Evidence-dark.webp"><img loading="lazy" src="assets/img/demo-element-Evidence-light.webp" width="2400" height="1500" decoding="async" alt="The evidence of the requirement Warn of a gust front: criterion 1 verified by a passed test case, criterion 2 failed, each test case with the reference of its criterion in its name. Below, the form to record a check."></picture></div>
+    <figcaption>The evidence of a requirement, per acceptance criterion: the test cases that name it, with their result. A check that is no automated test, such as an inspection, is recorded on the same page.</figcaption>
+  </figure>
+  <figure class="panel" role="tabpanel" id="p-list" aria-labelledby="t-list">
+    <div class="frame" style="--mw:300%;--mx:-53%;--my:-1%"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/demo-list-dark.webp"><img loading="lazy" src="assets/img/demo-list-light.webp" width="2400" height="1500" decoding="async" alt="The list of the 8 system requirements, each with its status and its verification status, and on the right the values to narrow the list by: status, requirement type and package."></picture></div>
+    <figcaption>A list narrows by the values on its right, sorts and groups. A narrowed list can be saved as a filter or as a perspective.</figcaption>
+  </figure>
+  <figure class="panel" role="tabpanel" id="p-matrix" aria-labelledby="t-matrix">
+    <div class="frame" style="--mw:327%;--mx:-58%;--my:-1%"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/demo-matrix-dark.webp"><img loading="lazy" src="assets/img/demo-matrix-light.webp" width="2400" height="1500" decoding="async" alt="The trace matrix of the system requirements: one row per requirement, one column per relation kind and direction, such as Derives from with the need of each requirement."></picture></div>
+    <figcaption>The trace matrix shows the elements of one type, with one column per relation kind and direction.</figcaption>
+  </figure>
+  <p class="small after">Only your computer reaches the web UI, and only with the address <code>reqseq ui</code> prints. The desktop shell of the release shows the same pages in a window of its own. <a class="textlink" href="https://thomasbirkmaier.github.io/ReqSeq/concepts/the-web-ui/">The web UI in the docs</a></p>
+</section>
+
+<section class="wrap" aria-labelledby="h-more">
+  <div class="cols split">
+    <div class="head"><h2 id="h-more">Also in ReqSeq.</h2></div>
+    <dl class="body more">
+      <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/take-a-baseline/">Baselines</a></dt><dd>A baseline is a named state that no longer changes. Later you see what changed since, word by word.</dd></div>
+      <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/manage-a-product-variant/">Variants</a></dt><dd>A variant builds on the shared core and replaces or excludes single requirements.</dd></div>
+      <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/exchange-requirements-with-reqif/">ReqIF</a></dt><dd>Import and export of ReqIF 1.2 files, to exchange requirements with other tools.</dd></div>
+      <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/extend-the-metamodel/">Your metamodel</a></dt><dd>Types, properties, relation kinds and statuses belong to the workspace. It starts with a standard model you can extend.</dd></div>
+      <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/publish-the-workspace-as-html/">HTML export</a></dt><dd>The workspace as a folder of HTML pages that people read in a browser, without ReqSeq, Git or network.</dd></div>
+      <div><dt><a href="https://thomasbirkmaier.github.io/ReqSeq/how-to/record-test-evidence/">Checks that are no tests</a></dt><dd>An inspection or a review is recorded as a verification record, for all acceptance criteria or for some.</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="wrap" aria-labelledby="h-ways">
+  <div class="cols">
+    <div class="head">
+      <h2 id="h-ways">Four ways in. The same commands, the same result.</h2>
+      <p class="lead">The web UI, the CLI, the MCP server and the local API read and write the same Markdown files in your Git repository.</p>
+    </div>
+  </div>
+  <div class="ways">
+    <div class="way"><b>Web UI</b>You, in your browser<code>reqseq ui</code></div>
+    <div class="way"><b>CLI</b>Your agent, your CI, you<code>reqseq element create</code></div>
+    <div class="way"><b>MCP server</b>Your AI agent<code>reqseq mcp</code></div>
+    <div class="way"><b>Local API</b>Scripts and tools, on loopback<code>reqseq serve api</code></div>
+  </div>
+  <div class="gather" aria-hidden="true"></div>
+  <p class="gather-text">Whichever way in, ReqSeq runs the same commands on the same files: one Markdown file per element, with its properties in the frontmatter.</p>
+  <div class="cols">
+    <div class="file">
+      <div class="sheet" role="group" aria-label="The file of a system requirement">
+        <span class="sheet-name">system-requirement/SR-58b371c67baa.md</span>
+        <span class="l">---</span>
+        <span class="l">id: 4a1f0c52-7d3e-4b8a-9f61-58b371c67baa</span>
+        <span class="l">type: <span class="nb">system-requirement</span></span>
+        <span class="l">status: draft</span>
+        <span class="l">title: Show the wind speed</span>
+        <span class="l"><span class="nb">requirement-type:</span> functional</span>
+        <span class="l"><span class="nb">acceptance-criteria:</span></span>
+        <span class="l i"><span class="nb">-</span> <u>key: k7f3</u><sup>1</sup></span>
+        <span class="l i">  text: The speed is shown in knots, with one decimal.</span>
+        <span class="l i"><span class="nb">-</span> key: q91q</span>
+        <span class="l i">  text: The value is at most 10 seconds old.</span>
+        <span class="l"><span class="nb">derives-from:</span></span>
+        <span class="l i"><span class="nb">-</span> { id: 0b9e6d14-52c7-4f0a-8e3d-d0e44b7fe707, <u>version: n2:8719f198fc7c4ff2</u><sup>2</sup>, title: See the wind speed }</span>
+        <span class="l">---</span>
+        <span class="l gap"></span>
+        <span class="l k">The station must show the wind speed in knots, updated every 10 seconds.</span>
+      </div>
+    </div>
+    <div class="file-notes">
+      <ol>
+        <li><b>1</b><span>A test names an acceptance criterion by its key.</span></li>
+        <li><b>2</b><span>The relation keeps the version of the need. When the need changes, the relation shows as outdated, so you know to review the requirement.</span></li>
+      </ol>
+      <p><code>reqseq workspace connect-agent</code> with <code>--client</code> prints the setup that lets your agent's client start the MCP server for your workspace: Claude Code, VS Code, Codex CLI, Claude Desktop, Cursor, or a JSON block for any other client. <a class="textlink" href="https://thomasbirkmaier.github.io/ReqSeq/how-to/connect-an-ai-agent/">Connect an AI agent</a></p>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+<section class="wrap" aria-labelledby="h-never">
+  <div class="cols split">
+    <div class="head"><h2 id="h-never">What ReqSeq never does.</h2></div>
+    <ul class="body nevers">
+      <li><h3>It never opens a network connection.</h3><p>Nothing is downloaded while unpacking or running, and nothing updates itself. The web UI and the local API answer on your computer only.</p></li>
+      <li><h3>It never writes to Git.</h3><p>ReqSeq reads Git. Committing stays with you.</p></li>
+      <li><h3>It never sets a status.</h3><p>Only people approve. What ReqSeq computes is the verification status, from the evidence records.</p></li>
+      <li><h3>It never deletes an element.</h3><p>An element that was approved or is in a baseline is superseded, so its history stays.</p></li>
+    </ul>
+  </div>
+</section>
+</div>
+
+<section class="wrap" aria-labelledby="h-own">
+  <div class="cols own">
+    <div class="head">
+      <h2 id="h-own">ReqSeq is built against its own specification.</h2>
+      <p class="lead">Its system requirements are elements in a ReqSeq workspace, traced from the needs to the evidence of the tests. The specification is published as an HTML export with each release.</p>
+      <p><a class="textlink" href="https://thomasbirkmaier.github.io/ReqSeq/spec/">Read the specification</a></p>
+    </div>
+    <figure>
+      <div class="frame"><picture><source media="(prefers-color-scheme:dark)" srcset="assets/img/spec-overview-dark.webp"><img loading="lazy" src="assets/img/spec-overview-light.webp" width="2400" height="1500" decoding="async" alt="The overview of ReqSeq's own specification in the web UI: 162 of 179 system requirements are verified, 2 have outdated evidence and 15 no evidence yet, with the share of verified requirements per package."></picture></div>
+      <figcaption class="note">ReqSeq's own specification in the web UI. Its texts are German.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="wrap" aria-labelledby="h-start">
+  <div class="cols start">
+    <div class="head"><h2 id="h-start">Try it in an empty folder.</h2></div>
+    <ol>
+      <li><span><b>Download the archive for your system and unpack it.</b> Unpacking is installing. ReqSeq needs <code>git</code> on the path.</span></li>
+      <li><span><b>Create a workspace and connect your agent.</b> <code>workspace init</code> also writes the skill file for your agent.</span></li>
+      <li><span><b>Tell your agent what you need.</b> Or work by hand: <code>reqseq ui</code> opens the web UI.</span></li>
+    </ol>
+    <div class="sheet" role="group" aria-label="Commands and output">
+      <span class="l c">reqseq workspace init . "Weather station"</span>
+      <span class="l">Created workspace Weather station; 6 files written.</span>
+      <span class="l">files:</span>
+      <span class="l i">metamodel/<wbr><span class="nb">standard-model.yaml</span></span>
+      <span class="l i"><span class="nb">reqseq-workspace.yaml</span></span>
+      <span class="l i">evidence/.gitkeep</span>
+      <span class="l i">.gitignore</span>
+      <span class="l i">.claude/<wbr>skills/<wbr><span class="nb">managing-requirements</span>/<wbr>SKILL.md</span>
+      <span class="l i">.agents/<wbr>skills/<wbr><span class="nb">managing-requirements</span>/<wbr>SKILL.md</span>
+      <span class="l">No problems.</span>
+      <span class="l">next:</span>
+      <span class="l i">reqseq workspace <span class="nb">connect-agent</span> <span class="nb">--client</span> &lt;client&gt;  Connect AI agent</span>
+      <span class="l i">reqseq element create &lt;type&gt; &lt;title&gt;              Create element</span>
+      <span class="l gap"></span>
+      <span class="l c">reqseq workspace <span class="nb">connect-agent</span> <span class="nb">--client</span> <span class="nb">claude-code</span></span>
+    </div>
+    <div class="actions">
+      <a class="btn primary" href="https://github.com/ThomasBirkmaier/ReqSeq/releases/latest">Download ReqSeq</a>
+      <a class="btn" href="https://thomasbirkmaier.github.io/ReqSeq/how-to/install-reqseq/">Install ReqSeq</a>
+      <a class="btn" href="https://thomasbirkmaier.github.io/ReqSeq/start/get-started/">Get started</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="wrap">
+<div class="foot-in">
+  <div class="foot">
+    <a class="brand" href="#" aria-label="ReqSeq, to the top">
+      <svg width="24" height="24" viewBox="0 0 32 32" aria-hidden="true"><rect class="logo-bg" width="32" height="32" rx="8"/><path class="logo-fg" d="M10 9h7a5 5 0 0 1 0 10h-7zM10 19v4M17 19l5 4" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      ReqSeq
+    </a>
+    <nav aria-label="More">
+      <a href="https://thomasbirkmaier.github.io/ReqSeq/">Documentation</a>
+      <a href="https://thomasbirkmaier.github.io/ReqSeq/spec/">Specification</a>
+      <a href="https://github.com/ThomasBirkmaier/ReqSeq">GitHub</a>
+      <a href="https://github.com/ThomasBirkmaier/ReqSeq/releases/latest">Releases</a>
+      <a href="https://github.com/ThomasBirkmaier/ReqSeq/issues">Report a bug</a>
+      <a href="https://github.com/ThomasBirkmaier/ReqSeq/blob/main/LICENSE">License</a>
+    </nav>
+  </div>
+  <p class="note">This page loads nothing from other servers and sets no cookies.</p>
+</div>
+</footer>
+<script src="assets/site.js" defer></script>
+</body>
+</html>
